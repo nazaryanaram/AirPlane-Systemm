@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "cJSON/cJSON.h"
+#include "include/header.h"
 
 typedef struct {
     char name[50];
@@ -92,7 +92,7 @@ void write_struct_to_json(const char *filename, Person person) {
 }
 
 int main() {
-    const char *filename = "data.json";
+    const char *filename = "./data/data.json";
 
     Person person = read_json_to_struct(filename);
 
