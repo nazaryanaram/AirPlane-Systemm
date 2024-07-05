@@ -93,12 +93,7 @@ void write_struct_to_json(const char *filename, Person person) {
 
 int main() {
     const char *filename = "./data/data.json";
-
-    Person person = read_json_to_struct(filename);
-
-    printf("Name: %s\n", person.name);
-    printf("Age: %d\n", person.age);
-    printf("City: %s\n", person.city);
+    Person person;
 
     strcpy(person.name, "Alice");
     person.age = 25;
@@ -106,5 +101,12 @@ int main() {
 
     write_struct_to_json(filename, person);
 
+     person = read_json_to_struct(filename);
+
+    printf("Name: %s\n", person.name);
+    printf("Age: %d\n", person.age);
+    printf("City: %s\n", person.city);
+
+   
     return 0;
 }
