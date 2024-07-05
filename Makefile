@@ -13,10 +13,11 @@ LDFLAGS = -L$(CJSON_DIR)/build -lcjson -Wl,-rpath,$(CJSON_DIR)/build
 # Правило по умолчанию: собрать и связать проект
 all: $(TARGET)
 
-# Правило для сборки cJSON, если директория cJSON уже существует
+# Правило для сборки cJSON, если директория cJSON пуста
 $(CJSON_DIR)/build/libcjson.a:
 	@echo "Building cJSON library..."
-	cd $(CJSON_DIR)/build && cmake .. && make
+	mkdir -p $(CJSON_DIR)/build
+	cd $(CJSON_DIR) && git clone https://github.com/DaveGamble/cJSON.git . && cd build && cmake .. && make
 
 # Правило для сборки вашего проекта
 $(TARGET): $(SRC) $(CJSON_DIR)/build/libcjson.a
@@ -34,7 +35,7 @@ install-cjson: $(CJSON_DIR)/build/libcjson.a
 # Правило для очистки
 clean:
 	@echo "Cleaning up..."
-	cd $(CJSON_DIR)/build && make clean
+	rm -rf $(CJSON_DIR)/build
 	rm -f $(TARGET)
 
 .PHONY: all clean install-cjson
