@@ -1,7 +1,10 @@
+#include <stdio.h>
+#include "cJSON/cJSON.h"
+
+
 #ifndef FLIGHT_BOOKING_H
 #define FLIGHT_BOOKING_H
 
-#include <stdio.h>
 
 typedef struct
 {
