@@ -13,8 +13,13 @@ LDFLAGS = -L$(CJSON_DIR)/build -lcjson -Wl,-rpath,$(CJSON_DIR)/build
 # Правило по умолчанию: собрать и связать проект
 all: $(TARGET)
 
+# Правило для клонирования cJSON
+$(CJSON_DIR):
+	@echo "Cloning cJSON library..."
+	git clone https://github.com/DaveGamble/cJSON.git $(CJSON_DIR)
+
 # Правило для сборки cJSON
-$(CJSON_DIR)/build/libcjson.a:
+$(CJSON_DIR)/build/libcjson.a: $(CJSON_DIR)
 	@echo "Building cJSON library..."
 	cd $(CJSON_DIR) && mkdir -p build && cd build && cmake .. && make
 
