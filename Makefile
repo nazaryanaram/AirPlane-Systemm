@@ -16,8 +16,12 @@ all: $(TARGET)
 # Правило для сборки cJSON, если директория cJSON пуста
 $(CJSON_DIR)/build/libcjson.a:
 	@echo "Building cJSON library..."
+	@if [ ! -d $(CJSON_DIR)/.git ]; then \
+		rm -rf $(CJSON_DIR)/*; \
+		git clone https://github.com/DaveGamble/cJSON.git $(CJSON_DIR); \
+	fi
 	mkdir -p $(CJSON_DIR)/build
-	cd $(CJSON_DIR) && git clone https://github.com/DaveGamble/cJSON.git . && cd build && cmake .. && make
+	cd $(CJSON_DIR)/build && cmake .. && make
 
 # Правило для сборки вашего проекта
 $(TARGET): $(SRC) $(CJSON_DIR)/build/libcjson.a
@@ -35,7 +39,7 @@ install-cjson: $(CJSON_DIR)/build/libcjson.a
 # Правило для очистки
 clean:
 	@echo "Cleaning up..."
-	rm -rf $(CJSON_DIR)/build
+	cd $(CJSON_DIR)/build && make clean
 	rm -f $(TARGET)
 
 .PHONY: all clean install-cjson
